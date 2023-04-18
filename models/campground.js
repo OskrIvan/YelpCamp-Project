@@ -8,12 +8,14 @@ const CampgroundSchema = new Schema({
     description: String,
     location: String,
     image: String,
-    reviews: [
-        {
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    reviews: {
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
-    ]
 });
 
 CampgroundSchema.post('finOneAndDelete', async function (doc) {
