@@ -5,6 +5,8 @@ const ExpressError = require('../Utilities/ExpressError');
 const Campground = require('../models/campground');
 const Review = require('../models/review');
 const { campgroundSchema } = require('../schemas.js');
+const {isLoggedIn} = require('../Utilities/middleware');
+
 
 
 const validateCampground = (req, res, next) => {
@@ -23,7 +25,7 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('campgrounds/index', { campgrounds })
 }));
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('campgrounds/new');
 });
 
@@ -44,7 +46,7 @@ router.get('/:id', catchAsync(async (req, res,) => {
     res.render('campgrounds/show', { campground });
 }));
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id)
     res.render('campgrounds/edit', { campground });
 }))
