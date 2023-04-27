@@ -1,22 +1,24 @@
-if(process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
+
 const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
 const path = require('path');
+const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
-const methodOverride = require('method-override');
 const ExpressError = require('./Utilities/ExpressError');
+const methodOverride = require('method-override');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+
+
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user'); 
 
 
 
@@ -32,6 +34,8 @@ db.on("error", console.error.bind(console, " connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
+
+const app = express();
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -86,8 +90,8 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Something went wrong!'
     res.status(statusCode).render('error', { err });
-})
+});
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
-})
+});
