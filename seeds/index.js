@@ -38,20 +38,20 @@ async function seedImg() {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
-        const random1000 = Math.floor(Math.random() * 1000);
+    for (let i = 0; i < 200; i++) {
+        const random1003 = Math.floor(Math.random() * 1003);
         const price = Math.floor(Math.random() * 30) + 10;
         const camp = new Campground({
             author: '643dbc0edfbee222f4612c8d',
-            location: `${cities[random1000].city}, ${cities[random1000].state}`,
+            location: `${cities[random1003].city}, ${cities[random1003].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Beautiful place to camp',
             price, 
             geometry: {
                 type: "Point",
                 coordinates: [
-                    cities[random1000].longitude,
-                    cities[random1000].latitude,
+                    cities[random1003].longitude,
+                    cities[random1003].latitude,
                 ]
             },
             images: [
