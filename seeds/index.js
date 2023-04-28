@@ -20,20 +20,20 @@ db.once("open", () => {
 
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
-
-async function seedImg() {
-    try {
-        const resp = await axios.get('https://api.unsplash.com/photos/random', {
-            params: {
-                client_id: 'WwM9acbG_Ngdi8FNbNFw67hdY9chvaeA-pRZc6pMAqI',
-                collections: '483251',
-            },
-        })
-        return resp.data.urls.small
-    } catch (err) {
-        console.error(err)
-    }
-};
+//  to feed the image with random images from my unsplash collection: 
+// async function seedImg() {
+//     try {
+//         const resp = await axios.get('https://api.unsplash.com/photos/random', {
+//             params: {
+//                 client_id: 'WwM9acbG_Ngdi8FNbNFw67hdY9chvaeA-pRZc6pMAqI',
+//                 collections: '483251',
+//             },
+//         })
+//         return resp.data.urls.small
+//     } catch (err) {
+//         console.error(err)
+//     }
+// };
 
 
 const seedDB = async () => {
@@ -68,6 +68,8 @@ const seedDB = async () => {
         await camp.save();
     }
 }
+
+
 
 seedDB().then(() => {
     mongoose.connection.close();
