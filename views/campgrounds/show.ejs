@@ -79,7 +79,7 @@
                     <label for="first-rate5" title="Amazing">5 stars</label>
                 </fieldset>
                 <div class="mb-3">
-                    <label class="form-label" for="body">Review comments: </label>
+                    <label class="form-label" for="body">Review comments:</label>
                     <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
                     <div class="valid-feedback">
                         Looks good!
@@ -114,6 +114,7 @@
         
 <script> 
     const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const campground = <%- JSON.stringify(campground) %>
 </script>
         
 <script src="/javascripts/showPageMap.js"></script>

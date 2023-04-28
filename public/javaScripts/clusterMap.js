@@ -35,11 +35,11 @@ map.on('load', function () {
             'circle-color': [
                 'step',
                 ['get', 'point_count'],
-                '#00BCD4',
-                10,
-                '#2196F3',
-                30,
-                '#3F51B5'
+                '#51bbd6',
+                100,
+                '#f1f075',
+                750,
+                '#f28cb1'
             ],
             'circle-radius': [
                 'step',
@@ -59,7 +59,7 @@ map.on('load', function () {
         source: 'campgrounds',
         filter: ['has', 'point_count'],
         layout: {
-            'text-field': '{point_count_abbreviated}',
+            'text-field': ['get', 'point_count_abbreviated'],
             'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
             'text-size': 12
         }
@@ -79,14 +79,14 @@ map.on('load', function () {
     });
 
     // inspect a cluster on click
-    map.on('click', 'clusters', function (e) {
+    map.on('click', 'clusters', (e) => {
         const features = map.queryRenderedFeatures(e.point, {
             layers: ['clusters']
         });
         const clusterId = features[0].properties.cluster_id;
         map.getSource('campgrounds').getClusterExpansionZoom(
             clusterId,
-            function (err, zoom) {
+            (err, zoom) => {
                 if (err) return;
 
                 map.easeTo({
@@ -101,9 +101,11 @@ map.on('load', function () {
     // the unclustered-point layer, open a popup at
     // the location of the feature, with
     // description HTML from its properties.
-    map.on('click', 'unclustered-point', function (e) {
-        const { popUpMarkup } = e.features[0].properties;
+    map.on('click', 'unclustered-point', (e) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
+        const mag = e.features[0].properties.mag;
+        const tsunami =
+            e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
 
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
@@ -114,7 +116,9 @@ map.on('load', function () {
 
         new mapboxgl.Popup()
             .setLngLat(coordinates)
-            .setHTML(popUpMarkup)
+            .setHTML(
+                `magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`
+            )
             .addTo(map);
     });
 
