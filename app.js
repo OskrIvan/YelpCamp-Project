@@ -47,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 const sessionConfig = {
-    secret: 'temporarysecret',
+    secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
     cookie: {
