@@ -3,6 +3,7 @@ const cities = require('./cities');
 const axios = require('axios');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
+const { campgroundImages } = require('./images');
 
 main().catch(err => console.log(err));
 
@@ -20,7 +21,8 @@ db.once("open", () => {
 
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
-//  to feed the image with random images from my unsplash collection: 
+// to feed the image with random images from my unsplash collection.
+// this has been replaced with the database from claudinary. 
 // async function seedImg() {
 //     try {
 //         const resp = await axios.get('https://api.unsplash.com/photos/random', {
@@ -40,6 +42,10 @@ const seedDB = async () => {
     await Campground.deleteMany({});
     for (let i = 0; i < 200; i++) {
         const random1003 = Math.floor(Math.random() * 1003);
+        const randomImage1 = Math.floor(Math.random() * 50);
+        const randomImage2 = Math.floor(Math.random() * 50);
+        const randomImage3 = Math.floor(Math.random() * 50);
+        const randomImage4 = Math.floor(Math.random() * 50);
         const price = Math.floor(Math.random() * 30) + 10;
         const camp = new Campground({
             author: '643dbc0edfbee222f4612c8d',
@@ -56,12 +62,20 @@ const seedDB = async () => {
             },
             images: [
                 {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ahfnenvca4tha00h2ubt.png',
-                    filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
+                    url: `${images[randomImage1].url}`,
+                    filename: `${images[randomImage1].filename}`,
                 },
                 {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png',
-                    filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
+                    url: `${images[randomImage2].url}`,
+                    filename: `${images[randomImage2].filename}`,
+                },
+                {
+                    url: `${images[randomImage3].url}`,
+                    filename: `${images[randomImage3].filename}`,
+                },
+                {
+                    url: `${images[randomImage4].url}`,
+                    filename: `${images[randomImage4].filename}`,
                 }
             ]
         })
