@@ -8999,7 +8999,7 @@ module.exports = [
         rank: "1000",
         state: "Florida",
     },
-        {
+    {
         city: "Guatemala City",
         growth_from_2000_to_2013: "10.78%",
         latitude: 14.6407200,
@@ -9017,7 +9017,7 @@ module.exports = [
         rank: "1002",
         state: "Guatemala",
     },
-        {
+    {
         city: "Punta de Palma",
         growth_from_2000_to_2013: "0.78%",
         latitude: 15.763546,
