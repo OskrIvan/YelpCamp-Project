@@ -4,7 +4,6 @@ const axios = require('axios');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 const images = require('./images');
-const { address, file } = require('./pictures');
 
 main().catch(err => console.log(err));
 
@@ -42,7 +41,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 300; i++) {
         const random1003 = Math.floor(Math.random() * 1003);
         const randomImage1 = Math.floor(Math.random() * 62);
         const randomImage2 = Math.floor(Math.random() * 62);
