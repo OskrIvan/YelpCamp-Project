@@ -17,19 +17,22 @@ const User = require('./models/user');
 const helmet = require('helmet');
 
 const mongoSanitize = require('express-mongo-sanitize');
+const MongoStore = require('connect-mongo');
 
 
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-
+// const dbUrl = process.env.DB_URL; //connecting with DB on Atlas
+const dbUrl ='mongodb://127.0.0.1:27017/yelp-camp'; //connect with local mongoDB
 
 
 main().catch(err => console.log(err));
 
+
 async function main() {
     mongoose.set('strictQuery', true);
-    await mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
+    await mongoose.connect(dbUrl); 
 }
 
 const db = mongoose.connection;
@@ -52,7 +55,20 @@ app.use(mongoSanitize({
 }));
 
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+});
+
 const sessionConfig = {
+    store,
     secret: 'thisshouldbeabettersecret!',
     resave: false,
     saveUninitialized: true,
@@ -103,8 +119,8 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/dfedyydhu/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://res.cloudinary.com/douqbebwk/",
+                "https://res.cloudinary.com/dfedyydhu/", //My account 
+                "https://res.cloudinary.com/douqbebwk/", //Colt's account
                 "https://images.unsplash.com/",
                 "cloudinary://988589468639438:wT5wkd0OgPE3tFQ4n4zjS5adER4@dfedyydhu"
             ],
